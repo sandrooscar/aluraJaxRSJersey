@@ -33,7 +33,7 @@ public class ClienteTest {
 	@Test
 	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("carrinhos").request().get(String.class);
+		String conteudo = target.path("carrinhos/1").request().get(String.class);
 		Carrinho carrinho = (Carrinho)new XStream().fromXML(conteudo);
 		Assert.assertTrue("Rua Vergueiro 3185, 8 andar".equalsIgnoreCase(carrinho.getRua()));
 	}
@@ -41,7 +41,7 @@ public class ClienteTest {
 	@Test
 	public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("projetos").request().get(String.class);
+		String conteudo = target.path("projetos/1").request().get(String.class);
 		Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
 		Assert.assertTrue("Minha loja".equalsIgnoreCase(projeto.getNome()) && projeto.getAnoDeInicio() == 2014);
 	}
@@ -49,7 +49,7 @@ public class ClienteTest {
 	@Test
 	public void testaBuscaProjeto() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("projetos").request().get(String.class);
+		String conteudo = target.path("projetos/1").request().get(String.class);
 		Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
 		System.out.println(conteudo);
 	}
