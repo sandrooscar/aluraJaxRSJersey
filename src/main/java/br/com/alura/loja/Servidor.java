@@ -9,7 +9,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public class Servidor {
 	public static void main(String[] args) throws IOException {
-		HttpServer server = inicializaServidor("http://localhost:8080/");
+		HttpServer server = inicializaServidor("http://localhost:8080");
 		System.out.println("Servidor rodando");
 		System.in.read();
 		server.stop();

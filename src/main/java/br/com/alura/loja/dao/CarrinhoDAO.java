@@ -21,6 +21,15 @@ public class CarrinhoDAO {
 								.para("Rua Vergueiro 3185, 8 andar", "São Paulo")
 								.setId(1l);
 		banco.put(1l, carrinho);
+
+		Produto videogame2 = new Produto(9090, "XBOX", 4000, 1);
+		Produto mesaTenis = new Produto(3468, "Mesa de tenis", 60, 2);
+		Carrinho carrinho2 = new Carrinho()
+				.adiciona(videogame2)
+				.adiciona(mesaTenis)
+				.para("Rua Vergueiro 3185, 8 andar", "São Paulo")
+				.setId(1l);
+		banco.put(2l, carrinho2);
 	}
 	
 	public void adiciona(Carrinho carrinho) {
