@@ -1,11 +1,16 @@
 package br.com.alura.loja;
 
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.json.simple.JSONObject;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
@@ -70,7 +75,13 @@ public class ClienteTest {
 		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
 
         Response response = target.path("/carrinhos").request().post(entity);
-        Assert.assertEquals("<status>sucesso</status>", response.readEntity(String.class));
+        //verificando se o location deu certo
+        String location = response.getHeaderString("Location");
+        Assert.assertEquals(201, response.getStatus());
+
+        String conteudo = client.target(location).request().get(String.class);
+        Assert.assertTrue(conteudo.contains("Tablet"));
+        
 		
 	}
 }
