@@ -1,18 +1,15 @@
 package br.com.alura.loja;
 
-import java.util.List;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.simple.JSONObject;
-
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,12 +23,15 @@ import junit.framework.Assert;
 
 public class ClienteTest {
 	private static final String urlServidor = "http://localhost:8080";
-	private Client client = ClientBuilder.newClient();
+	private Client client = null;
 	private HttpServer server;
 
 	@Before
 	public void startaServidor() {
 		server = Servidor.inicializaServidor(urlServidor);
+		ClientConfig config = new ClientConfig();
+		config.register(new LoggingFilter());
+		client = ClientBuilder.newClient(config);
 	}
 	
 	@After
