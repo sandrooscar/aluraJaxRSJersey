@@ -42,8 +42,8 @@ public class ClienteTest {
 	@Test
 	public void testaQueBuscarUmCarrinhoTrazOCarrinhoEsperado() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("carrinhos/1").request().get(String.class);
-		Carrinho carrinho = (Carrinho)new XStream().fromXML(conteudo);
+		Carrinho carrinho = target.path("carrinhos/1").request().get(Carrinho.class);
+//		Carrinho carrinho = (Carrinho)new XStream().fromXML(conteudo);
 		Assert.assertTrue("Rua Vergueiro 3185, 8 andar".equalsIgnoreCase(carrinho.getRua()));
 	}
 	
@@ -69,18 +69,17 @@ public class ClienteTest {
         carrinho.adiciona(new Produto(314L, "Tablet", 999, 1));
         carrinho.setRua("Rua Vergueiro");
         carrinho.setCidade("Sao Paulo");
-        String xml = carrinho.toXML();
         
 		WebTarget target = client.target(urlServidor);
-		Entity<String> entity = Entity.entity(xml, MediaType.APPLICATION_XML);
+		Entity<Carrinho> entity = Entity.entity(carrinho, MediaType.APPLICATION_XML);
 
         Response response = target.path("/carrinhos").request().post(entity);
         //verificando se o location deu certo
         String location = response.getHeaderString("Location");
         Assert.assertEquals(201, response.getStatus());
 
-        String conteudo = client.target(location).request().get(String.class);
-        Assert.assertTrue(conteudo.contains("Tablet"));
+        Carrinho carrinhoCarregado = client.target(location).request().get(Carrinho.class);
+        Assert.assertTrue(carrinhoCarregado.getProdutos().get(0).getNome().contains("Tablet"));
         
 		
 	}
