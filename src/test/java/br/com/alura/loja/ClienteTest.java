@@ -50,17 +50,15 @@ public class ClienteTest {
 	@Test
 	public void testaQueBuscarUmProjetoTrazOProjetoEsperado() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("projetos/1").request().get(String.class);
-		Projeto projeto = (Projeto) new XStream().fromXML(conteudo);
+		Projeto projeto = target.path("projetos/1").request().get(Projeto.class);
 		Assert.assertTrue("Minha loja".equalsIgnoreCase(projeto.getNome()) && projeto.getAnoDeInicio() == 2014);
 	}
 	
 	@Test
 	public void testaBuscaProjeto() {
 		WebTarget target = client.target(urlServidor);
-		String conteudo = target.path("projetos/1").request().get(String.class);
-		Assert.assertTrue(conteudo.contains("<nome>Minha loja"));
-		System.out.println(conteudo);
+		Projeto projeto = target.path("projetos/1").request().get(Projeto.class);
+		Assert.assertTrue(projeto.getNome().contains("Minha loja"));
 	}
 	
 	@Test

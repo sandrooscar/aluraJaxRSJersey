@@ -19,6 +19,10 @@ public class Carrinho {
 	private String rua;
 	private String cidade;
 	private long id;
+	
+	public Carrinho() {
+		
+	}
 
 	public Carrinho adiciona(Produto produto) {
 		produtos.add(produto);
